@@ -5,10 +5,17 @@
                 'name' => 'Dashboard',
                 'route' => route('admin.dashboard'),
                 'active' => request()->routeIs('admin.dashboard')
+            ],
+
+
+            [
+                //Familias de productos
+                'name' => 'Families',
+                'icon' => 'fa-solid fa-users',
+                'route' => route('admin.families.index'),
+                'active' => request()->routeIs('admin.families.*')
             ]
-
-
-];
+        ];
     @endphp
 
 
