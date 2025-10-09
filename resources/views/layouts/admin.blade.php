@@ -88,6 +88,16 @@ sidebarOpen: false
         </script>
     @endif
 
+    <script>
+        Livewire.on('swal:modal', data => {
+            Swal.fire(data);
+        });
+
+        Livewire.on('swal', data => {
+            Swal.fire(data[0]);
+        });
+    </script>
+
 </body>
 
 </html>

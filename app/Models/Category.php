@@ -19,8 +19,8 @@ class Category extends Model
         return $this->belongsTo(Family::class);
     }
 
-    //Relacion uno a muchos 
-    public function sunbcategories(){
+    //Relacion uno a muchos
+    public function subcategories(){
         return $this->hasMany(Subcategory::class);
     }
 

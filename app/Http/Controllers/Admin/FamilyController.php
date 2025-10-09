@@ -37,6 +37,7 @@ class FamilyController extends Controller
         ]);
 
         Family::create($request->all());
+        
         session()->flash('swal', [
             'icon' => 'success',
             'title' => 'bien hecho',

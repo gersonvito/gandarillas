@@ -14,7 +14,21 @@
                 'icon' => 'fa-solid fa-users',
                 'route' => route('admin.families.index'),
                 'active' => request()->routeIs('admin.families.*')
-            ]
+            ],
+            [
+                //Categorías de productos
+                'name' => 'Categorías',
+                'icon' => 'fa-solid fa-tags',
+                'route' => route('admin.categories.index'),
+                'active' => request()->routeIs('admin.categories.*')
+            ],
+            [
+                //Subcategorías de productos
+                'name' => 'Subcategorías',
+                'icon' => 'fa-solid fa-tag',
+                'route' => route('admin.subcategories.index'),
+                'active' => request()->routeIs('admin.subcategories.*')
+            ],
         ];
     @endphp
 
