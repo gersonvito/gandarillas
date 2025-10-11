@@ -15,26 +15,26 @@ class Product extends Model
         'description',
         'image_path',
         'price',
-        'subategory_id'
+        'subcategory_id'
 
     ];
 
-    //relacion uno a muchos inversa 
+    //relacion uno a muchos inversa
     public function Subcategory(){
         return $this->belongsTo(Subcategory::class);
     }
 
-    //Relacion uno a muchos 
+    //Relacion uno a muchos
     public function variants(){
         return $this->hasMany(variant::class);
     }
 
-    //Relacion muchos a muchos 
+    //Relacion muchos a muchos
     public function option (){
         return $this->belongsToMany(option::class)
                     ->withPivot('value')
                     ->whithtimestamps();
     }
 
-    
+
 }

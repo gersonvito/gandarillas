@@ -25,9 +25,7 @@ class SubcategoryCreate extends Component
     }
 
     public function updatedSubcategoryFamilyId()
-    {
-        $this->subcategory['category_id'] = '';
-    }
+    { $this->subcategory['category_id'] = ''; }
 
     #[Computed()]
     public function categories()
@@ -48,8 +46,6 @@ class SubcategoryCreate extends Component
         ]);
 
         Subcategory::create($this->subcategory);
-
-        \App\Models\Subcategory::create($this->subcategory);
         session()->flash('swal', [
             'icon' => 'success',
             'title' => 'Bien hecho',

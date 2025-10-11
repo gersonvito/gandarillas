@@ -73,7 +73,20 @@ class SubcategoryController extends Controller
      */
     public function update(Request $request, Subcategory $subcategory)
     {
-        //
+        $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required',
+        ]);
+
+        $subcategory->update($request->all());
+
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Bien hecho',
+            'text' => 'subcategoria actualizada correctamente.'
+        ]);
+
+        return redirect()->route('admin.subcategories.index');
     }
 
     /**
