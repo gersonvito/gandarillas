@@ -11,7 +11,8 @@
                     <input type="file" class="hidden" accept="image/*" wire:model="image">
                 </label>
             </div>
-            <img class=" " src="{{ $image ? $image->temporaryUrl() : asset('img/prueba1.png') }}" alt="">
+            <img class="aspect-[16/9] object-cover object-center w-full" src="{{ $image ? $image->temporaryUrl() : asset('img/prueba1.png') }}" alt="">
+            {{-- <img class=" " src="{{ $image ? $image->temporaryUrl() : asset('img/prueba1.png') }}" alt=""> --}}
         </figure>
 
         <x-validation-errors class="mb-4"/>
