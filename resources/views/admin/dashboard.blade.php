@@ -33,7 +33,7 @@
         <div class="bg-white rounded-lg shadow-lg p-6 flex items-center justify-center">
 
             <h2 class="text-xl font-semibold">
-                Coders Free
+                VillarroelCoders
             </h2>
 
         </div>

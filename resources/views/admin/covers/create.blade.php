@@ -13,8 +13,8 @@
 ]">
 
     <form action="{{route('admin.covers.store')}}"
-    method="POST"
-    enctype="multipart/form-data">
+        method="POST"
+        enctype="multipart/form-data">
 
         @csrf
 
@@ -30,6 +30,9 @@
             <img src="{{asset('img/NoImagen.webp')}}" alt="portada" class="aspect-[3/1] w-full object-center"
             id="imgPreview">
         </figure>
+
+        <x-validation-errors class="mb-4" />
+
 
         <div class="md-4">
             <x-label>
@@ -84,29 +87,29 @@
 
     @push('js')
 
-    <script>
-        function previewImage(event, querySelector){
+        <script>
+            function previewImage(event, querySelector){
 
-        //Recuperamos el input que desencadeno la acción
-        let input = event.target;
+            //Recuperamos el input que desencadeno la acción
+            let input = event.target;
 
-        //Recuperamos la etiqueta img donde cargaremos la imagen
-        let imgPreview = document.querySelector(querySelector);
+            //Recuperamos la etiqueta img donde cargaremos la imagen
+            let imgPreview = document.querySelector(querySelector);
 
-        // Verificamos si existe una imagen seleccionada
-        if(!input.files.length) return
+            // Verificamos si existe una imagen seleccionada
+            if(!input.files.length) return
 
-        //Recuperamos el archivo subido
-        let file = input.files[0];
+            //Recuperamos el archivo subido
+            let file = input.files[0];
 
-        //Creamos la url
-        let objectURL = URL.createObjectURL(file);
+            //Creamos la url
+            let objectURL = URL.createObjectURL(file);
 
-        //Modificamos el atributo src de la etiqueta img
-        imgPreview.src = objectURL;
+            //Modificamos el atributo src de la etiqueta img
+            imgPreview.src = objectURL;
 
-    }
-    </script>
+        }
+        </script>
 
     @endpush
 

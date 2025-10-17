@@ -15,7 +15,7 @@
                 <h1 class="text-white">
                     <a href="/" class="inline-flex flex-col intems-end">
                         <span class="text-xl md:text-3xl leading-4 md:leading-6 font-semibold">
-                                Eccommerce
+                                Gandarillas
                         </span>
                         <span class="text-xs">
                                 Tienda online
@@ -71,6 +71,11 @@
                                 <x-dropdown-link href="{{route('profile.show')}}">
                                     Mi perfil
                                 </x-dropdown-link>
+                                
+                                <x-dropdown-link href="{{ url('/admin') }}">
+                                    Panel de administrador
+                                </x-dropdown-link>
+
 
                                 <div class="border-t border-gray-200"></div>
 
