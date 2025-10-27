@@ -12,18 +12,18 @@ class Option extends Model
     protected $fillable = [
         'name',
         'type',
-        
+
     ];
 
-    //Relacion muchos a muchos 
+    //Relacion muchos a muchos
         public function option (){
         return $this->belongsToMany(product::class)
                     ->withPivot('value')
                     ->whithtimestamps();
     }
 
-    //Relacion uno a muchos 
-    public function feauters()
+    //Relacion uno a muchos
+    public function features()
     {
         return $this->hasMany(Feature::class);
     }

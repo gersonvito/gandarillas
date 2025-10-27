@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FamilySeeder::class,
             //AdminUserSeeder::class,
+            OptionSeeder::class,
         ]);
 
         Product::factory(10)->create();

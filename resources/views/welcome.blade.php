@@ -2,9 +2,9 @@
 
     @push('css')
         <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
-        />
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"
+/>
     @endpush
 
     <!-- Slider main container -->
@@ -75,8 +75,8 @@
                 loop: true,
 
                 autoplay: {
-                    delay: 8000,
-                }
+                    delay: 5000,
+                },
 
                 // If we need pagination
                 pagination: {
@@ -89,8 +89,14 @@
                     prevEl: '.swiper-button-prev',
                 },
 
+                // And if we need scrollbar
+                 scrollbar: {
+                    el: '.swiper-scrollbar',
+                },
+
             });
         </script>
+
     @endpush
 
 </x-app-layout>
