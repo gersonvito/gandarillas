@@ -8,7 +8,7 @@
                     Opciones
                 </h1>
 
-                <x-button wire:click="$set('openModal', true)">
+                <x-button wire:click="$set('newOption.openModal', true)">
                     Nuevo
                 </x-button>
             </div>
@@ -21,7 +21,8 @@
 
                 @foreach ($options as $option)
 
-                    <div class="p-6 rounded-lg border border-gray-200 relative">
+                    <div class="p-6 rounded-lg border border-gray-200 relative"
+                        wire:key="option-{{$option->id}}">
 
                         <div class="absolute -top-3 px-4 bg-white">
                             <span>
@@ -30,27 +31,38 @@
                         </div>
 
                         {{--valores--}}
-                        <div class="flex flex-wrap">
+                        <div class="flex flex-wrap mb-4">
 
                             @foreach ($option->features as $feature)
 
                                 @switch($option->type)
                                     @case(1)
                                         {{-- Texto --}}
-                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
-                                            {{
-                                                $feature->description
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                                            {{ $feature->description }}
 
-                                            }}
+                                            <button class="ml-0.5"
+                                                onclick="confirmDelete({{ $feature->id }})">
+                                                <i class="fa-solid fa-xmark hover:text-red-600"></i>
+                                            </button>
+
                                         </span>
                                         @break
 
                                     @case(2)
                                         {{-- Color --}}
 
-                                        <span class="inline-block h-6 w-6 shadow-lg rounded-full border-2 border-gray-300 mr-4" style="background-color: {{ $feature->value }}">
+                                        <div class="relative">
+                                            <span class="inline-block h-6 w-6 shadow-lg rounded-full border-2 border-gray-300 mr-4" style="background-color: {{ $feature->value }}"> </span>
 
-                                        </span>
+                                            <button class="absolute z-10 left-3 -top-2 rounded-full bg-red-500 hover:bg-red-600 h-4 w-4 flex justify-center"
+                                                onclick="confirmDelete({{ $feature->id }})" >
+
+                                                <i class="fa-solid fa-xmark text-white text-xs"></i>
+                                            </button>
+
+                                        </div>
+
 
                                         @break
 
@@ -63,6 +75,10 @@
 
                         </div>
 
+                        <div>
+                            @livewire('admin.options.add-new-feature', ['option' => $option], key('add-new-feature-'. $option->id))
+                        </div>
+
                     </div>
 
                 @endforeach
@@ -72,7 +88,7 @@
 
     </section>
 
-    <x-dialog-modal wire:model="openModal">
+    <x-dialog-modal wire:model="newOption.openModal">
 
         <x-slot name="title">
             Crear nueva opcion
@@ -122,7 +138,7 @@
             </div>
 
             <div class="mb-4 space-y-4">
-                @foreach ($newOption['features'] as $index => $feature)
+                @foreach ($newOption->features as $index => $feature)
 
                     <div class="p-6 rounded-lg border border-gray-200 relative"
                         wire:key="features-{{$index}}">
@@ -141,7 +157,7 @@
                                     Valor
                                 </x-label>
 
-                                @switch($newOption['type'])
+                                @switch($newOption->type)
                                     @case(1)
 
                                         <x-input
@@ -156,7 +172,7 @@
                                         <div class="border border-gray-300 rounded-md h-[42px] flex items-center justify-between px-3">
 
                                             {{
-                                                $newOption['features'][$index]['value'] ?: 'Seleccione un color'
+                                                $newOption->features[$index]['value'] ?: 'Seleccione un color'
                                             }}
 
                                             <input type="color"
@@ -170,15 +186,17 @@
 
 
                             </div>
+
                             <div>
                                 <x-label class="mb-1">
                                     Descripcion
                                 </x-label>
 
-                                <x-input class="w-full"
-                                wire:model="newOption.features.{{ $index }}.description"
-                                placeholder="Ingrese la descripcion del valor"
-                                > </x-input>
+                                <x-input
+                                    class="w-full"
+                                    wire:model="newOption.features.{{ $index }}.description"
+                                    placeholder="Ingrese la descripcion del valor" />
+
                             </div>
 
                         </div>
@@ -204,5 +222,33 @@
         </x-slot>
 
     </x-dialog-modal>
+
+    @push('js')
+
+        <script>
+
+            function confirmDelete(featureId) {
+
+                Swal.fire({
+                    title: "Estás seguro?",
+                    text: "No podrás revertir esto!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, elimínalo!",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        @this.call('deleteFeature', featureId);
+                    }
+                });
+
+            }
+
+        </script>
+
+    @endpush
 
 </div>
