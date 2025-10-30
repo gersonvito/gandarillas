@@ -21,6 +21,7 @@ class Product extends Model
 
     ];
 
+
     protected function image(): Attribute
     {
         return Attribute::make(
@@ -39,10 +40,11 @@ class Product extends Model
     }
 
     //Relacion muchos a muchos
-    public function option (){
+    public function options(){
         return $this->belongsToMany(option::class)
-                    ->withPivot('value')
-                    ->whithtimestamps();
+                    ->using(OptionProduct::class)
+                    ->withPivot('features')
+                    ->withTimestamps();
     }
 
 
