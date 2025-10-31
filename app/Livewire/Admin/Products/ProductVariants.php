@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Admin\Products;
 
-use App\Models\Feature;
 use App\Models\Option;
-use Livewire\Attributes\Computed;
+use App\Models\Feature;
+use App\Models\Variant;
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 
 class ProductVariants extends Component
 {
@@ -84,12 +85,14 @@ class ProductVariants extends Component
         //dd($option_id, $feature_id);
 
         $this->product->options()->updateExistingPivot( $option_id, [
-            'features' => array_filter( $this->product->options()->find($option_id)->pivot->features, function ($feature) use ($feature_id) {
+            'features' => array_filter( $this->product->options->find($option_id)->pivot->features, function ($feature) use ($feature_id) {
                 return $feature['id'] != $feature_id;
             })
         ]);
 
         $this->product = $this->product->fresh();
+
+        $this->generarVariantes();
 
     }
 
@@ -97,6 +100,8 @@ class ProductVariants extends Component
     {
         $this->product->options()->detach( $option_id );
         $this->product = $this->product->fresh();
+
+        $this->generarVariantes();
     }
 
     public function save()
@@ -114,7 +119,52 @@ class ProductVariants extends Component
 
         $this->product = $this->product->fresh();
 
+        $this->generarVariantes();
+
         $this->reset('variant', 'openModal');
+
+    }
+
+    public function generarVariantes()
+    {
+        $features = $this->product->options->pluck('pivot.features');
+
+        $combinaciones = $this->generarCombinaciones($features);
+
+        $this->product->variants()->delete();
+
+        foreach ($combinaciones as $combinacion) {
+
+            $variant = Variant::create([
+                'product_id' => $this->product->id,
+            ]);
+
+            $variant->features()->attach($combinacion);
+
+        }
+
+    }
+
+    function generarCombinaciones($arrays, $indice = 0, $combinacion = [])
+    {
+
+        if ($indice == count($arrays)) {
+            return [$combinacion];
+        }
+
+        $resultado = [];
+
+        foreach ($arrays[$indice] as $item) {
+
+            $combinacionTemporal = $combinacion;
+            $combinacionTemporal[] = $item['id'];
+
+            $resultado = array_merge(
+                $resultado, $this->generarCombinaciones($arrays, $indice + 1, $combinacionTemporal)
+            );
+        }
+
+        return $resultado;
 
     }
 

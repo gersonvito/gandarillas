@@ -17,14 +17,14 @@ class Feature extends Model
     ];
 
     //Relacion uno a muchos inversa
-    public function option(){
-        return $this->belongsTo(option::class);
+    public function variants()
+    {
+        return $this->belongsToMany(Variant::class, 'feature_variant');
     }
 
-    // relacion muchoes a muchos 
-    public function variants(){
-        return $this->belongsToMany(Variant::class)
-                    ->withTimestamps();
+    public function option()
+    {
+        return $this->belongsTo(Option::class);
     }
 
 }

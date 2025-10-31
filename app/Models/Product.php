@@ -29,21 +29,23 @@ class Product extends Model
         );
     }
 
+
+
     //relacion uno a muchos inversa
-    public function Subcategory(){
+    public function subcategory(){
         return $this->belongsTo(Subcategory::class);
     }
 
     //Relacion uno a muchos
     public function variants(){
-        return $this->hasMany(variant::class);
+        return $this->hasMany(Variant::class);
     }
 
     //Relacion muchos a muchos
     public function options(){
-        return $this->belongsToMany(option::class)
+        return $this->belongsToMany(Option::class, 'option_product')
                     ->using(OptionProduct::class)
-                    ->withPivot('features')
+                    ->withPivot(['features'])
                     ->withTimestamps();
     }
 

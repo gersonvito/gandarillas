@@ -46,41 +46,41 @@
 
                                 @foreach ($option->pivot->features as $feature)
 
-                                    @switch($option->type)
-                                        @case(1)
-                                            {{-- Texto --}}
-                                            <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
-                                                {{ $feature['description'] }}
+                                    <div wire:key="option-{{ $option->id }}-feature-{{ $feature['id'] }}">
+                                        @switch($option->type)
+                                            @case(1)
+                                                {{-- Texto --}}
+                                                <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 pl-2.5 pr-1.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                                                    {{ $feature['description'] }}
 
-                                                <button class="ml-0.5"
-                                                    onclick="confirmDeleteFeature( {{ $option->id }}, {{ $feature['id'] }})">
-                                                    <i class="fa-solid fa-xmark hover:text-red-600"></i>
-                                                </button>
+                                                    <button class="ml-0.5"
+                                                        onclick="confirmDeleteFeature( {{ $option->id }}, {{ $feature['id'] }})">
+                                                        <i class="fa-solid fa-xmark hover:text-red-600"></i>
+                                                    </button>
 
-                                            </span>
-                                            @break
+                                                </span>
+                                                @break
 
-                                        @case(2)
-                                            {{-- Color --}}
+                                            @case(2)
+                                                {{-- Color --}}
 
-                                            <div class="relative">
-                                                <span class="inline-block h-6 w-6 shadow-lg rounded-full border-2 border-gray-300 mr-4" style="background-color: {{ $feature['value'] }}"> </span>
+                                                <div class="relative">
+                                                    <span class="inline-block h-6 w-6 shadow-lg rounded-full border-2 border-gray-300 mr-4" style="background-color: {{ $feature['value'] }}"> </span>
 
-                                                <button class="absolute z-10 left-3 -top-2 rounded-full bg-red-500 hover:bg-red-600 h-4 w-4 flex justify-center"
-                                                    onclick="confirmDelete({{ $feature['id'] }}, 'feature')" >
+                                                    <button class="absolute z-10 left-3 -top-2 rounded-full bg-red-500 hover:bg-red-600 h-4 w-4 flex justify-center"
+                                                        onclick="confirmDeleteFeature({{ $option->id }}, {{ $feature['id'] }})">
+                                                        <i class="fa-solid fa-xmark text-white text-xs"></i>
+                                                    </button>
 
-                                                    <i class="fa-solid fa-xmark text-white text-xs"></i>
-                                                </button>
-
-                                            </div>
+                                                </div>
 
 
-                                            @break
+                                                @break
 
-                                        @default
+                                            @default
 
-                                    @endswitch
-
+                                        @endswitch
+                                    </div>
 
                                 @endforeach
 
@@ -127,7 +127,7 @@
                     Opcion
                 </x-label>
 
-                <x-select class="w-full" wire:model.live="variant.option_id"> >
+                <x-select class="w-full" wire:model.live="variant.option_id">
 
                     <option value="" disabled>
                         Seleccione una opción

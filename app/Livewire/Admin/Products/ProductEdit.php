@@ -86,7 +86,7 @@ class ProductEdit extends Component
     public function store()
     {
         $this->validate([
-            'image' => 'nullable|image|max:1024',
+            'image' => 'nullable|image|max:5120',
             'productEdit.sku' => 'required|unique:products,sku,' . $this->product->id,
             'productEdit.name' => 'required|max:255',
             'productEdit.description' => 'nullable',

@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\FamilyController;
-use App\Http\Controllers\WelcomeController;
-use Illuminate\Queue\Console\RetryCommand;
+use App\Models\Product;
+use App\Models\Variant;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FamilyController;
+use Illuminate\Queue\Console\RetryCommand;
+use App\Http\Controllers\WelcomeController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
@@ -21,9 +23,9 @@ Route::middleware([
 
 
 
-/* Route::get('prueba', function () {
+ Route::get('prueba', function () {
 
-    $array1 = ['a', 'b', 'c'];
+/*     $array1 = ['a', 'b', 'c'];
     $array2 = ['a', 'b', 'c'];
     $array3 = ['a', 'b', 'c'];
 
@@ -31,10 +33,42 @@ Route::middleware([
 
     $combinaciones = generarCombinaciones($arrays);
 
-    return $combinaciones;
+    return $combinaciones; */
+
+    //$features = Product::find(11)->options->pluck('pivot.features');
+
+    //$combinaciones = generarCombinaciones($features);
+
+    //return $combinaciones;
+
+
+
+
+    $product = Product::find(3);
+
+    $features = $product->options->pluck('pivot.features');
+
+
+    //dd($features);
+
+    $combinaciones = generarCombinaciones($features);
+
+    $product->variants()->delete();
+
+    foreach ($combinaciones as $combinacion) {
+
+        $variant = Variant::create([
+            'product_id' => $product->id,
+
+        ]);
+
+        $variant->features()->attach($combinacion);
+
+    }
+
+    return "Variantes creadas correctamente.";
 
 });
-
 
 
 function generarCombinaciones($arrays, $indice = 0, $combinacion = [])
@@ -48,16 +82,19 @@ function generarCombinaciones($arrays, $indice = 0, $combinacion = [])
     $resultado = [];
 
     foreach ($arrays[$indice] as $item) {
-
+        // $item ya es un ID entero si normalizaste antes
         $combinacionTemporal = $combinacion;
-        $combinacionTemporal[] = $item;
+        $combinacionTemporal[] = (int) $item;
 
-        $resultado[] = array_merge($resultado, generarCombinaciones($arrays, $indice + 1, $combinacionTemporal));
-
-
+        // ❌ antes: $resultado[] = array_merge($resultado, generarCombinaciones(...));
+        // ✅ ahora:
+        $resultado = array_merge(
+            $resultado,
+            generarCombinaciones($arrays, $indice + 1, $combinacionTemporal)
+        );
     }
 
     return $resultado;
 
-} */
+}
 

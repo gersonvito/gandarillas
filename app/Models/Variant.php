@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product;
 
 class Variant extends Model
 {
@@ -18,6 +19,17 @@ class Variant extends Model
 
     //Relacion uno a muchos incversa
     public function product(){
-        return $this->belongsTo(product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    /*public function features()
+    {
+        // Por convención, pivot = feature_variant (orden alfabético)
+        return $this->belongsToMany(Feature::class);
+    }*/
+
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class, 'feature_variant');
     }
 }
