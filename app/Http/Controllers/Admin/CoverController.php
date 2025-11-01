@@ -33,7 +33,7 @@ class CoverController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|image|max:1024',
+            'image' => 'required|image|max:5120',
             'title' => 'required|string|max:255',
             'start_at' => 'required|date',
             'end_at' => 'nullable|date|after_or_equal:start_at',
