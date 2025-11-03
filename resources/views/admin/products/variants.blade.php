@@ -16,9 +16,16 @@
     ]
 ]">
 
-    <form action="" method="POST">
+    <form action="{{ route('admin.products.variantsUpdate', [$product, $variant]) }}"
+        method="POST"
+        enctype="multipart/form-data"
+        >
 
         @csrf
+
+        @method('PUT')
+
+        <x-validation-errors class="mb-4" />
 
         <div class="relative mb-6">
 
@@ -36,11 +43,12 @@
                     <i class="fas fa-camera mr-2"></i>
                     Actualizar imagen
 
-                    <input class="hidden"
+                    <input
+                        name="image"
+                        class="hidden"
                         type="file"
                         accept="image/*"
-                        name="image"
-                        onchange="previewImage(event, '#imgPreview')">>
+                        onchange="previewImage(event, '#imgPreview')">
 
                 </label>
             </div>
@@ -48,6 +56,7 @@
         </div>
 
         <div class="card">
+
             <div class="mb-4">
 
                 <x-label class="mb-1">
@@ -61,10 +70,32 @@
                     placeholder="Por favor ingrese el código del producto"
                 />
 
+            </div>
 
+            <div class="mb-4">
+
+                <x-label class="mb-1">
+                    Stock
+                </x-label>
+
+                <x-input class="w-full"
+                    type="text"
+                    name="stock"
+                    value="{{ old('stock', $variant->stock) }}"
+                    placeholder="Por favor ingrese el stock del producto"
+                />
 
             </div>
+
+            <div class="flex justify-end">
+                <x-button>
+                    Actualizar
+                </x-button>
+            </div>
+
+
         </div>
+
 
     </form>
 

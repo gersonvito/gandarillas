@@ -1,5 +1,5 @@
 <div>
-    <section class="rounded-lg border border-gray-100 bg-white shadow-lg mb-12">
+    <section class="rounded-lg border border-gray-100 bg-white shadow-lg">
         <header class="border-b border-gray-200 px-6 py-2">
             <div class="flex justify-between">
                 <h1 class="text-lg font-semibold text-gray-700">
@@ -110,47 +110,52 @@
 
     </section>
 
-    <section class="rounded-lg border border-gray-100 bg-white shadow-lg">
+    @if ($product->variants->count())
 
-        <header class="border-b border-gray-200 px-6 py-2">
+        <section class="rounded-lg border border-gray-100 bg-white shadow-lg mt-12">
 
-            <div class="flex justify-between">
-                <h1 class="text-lg font-semibold text-gray-700">
-                    Variantes
-                </h1>
+            <header class="border-b border-gray-200 px-6 py-2">
+
+                <div class="flex justify-between">
+                    <h1 class="text-lg font-semibold text-gray-700">
+                        Variantes
+                    </h1>
 
 
+                </div>
+            </header>
+
+            <div class="p-6">
+                <ul class="divide-y -my-4">
+
+                    @foreach ($product->variants as $item)
+
+                        <li class="py-4 flex items-center">
+                            <img src="{{ $item->image }}" class="w-12 h-12 object-cover object-center">
+
+                            <p class="divide-x">
+                                @foreach ($item->features as $feature)
+
+                                    <span class="px-3">
+                                        {{ $feature['description'] }}
+                                    </span>
+                                @endforeach
+                            </p>
+
+                            <a href="{{ route('admin.products.variants', [$product, $item]) }}" class="ml-auto btn-blue">
+                                Editar
+                            </a>
+
+                        </li>
+
+                    @endforeach
+
+                </ul>
             </div>
-        </header>
+        </section>
 
-        <div class="p-6">
-            <ul class="divide-y -my-4">
+    @endif
 
-                @foreach ($product->variants as $item)
-
-                    <li class="py-4 flex items-center">
-                        <img src="{{ $item->image }}" class="w-12 h-12 object-cover object-center">
-
-                        <p class="divide-x">
-                            @foreach ($item->features as $feature)
-
-                                <span class="px-3">
-                                    {{ $feature['description'] }}
-                                </span>
-                            @endforeach
-                        </p>
-
-                        <a href="{{ route('admin.products.variants', [$product, $item]) }}" class="ml-auto btn-blue">
-                            Editar
-                        </a>
-
-                    </li>
-
-                @endforeach
-
-            </ul>
-        </div>
-    </section>
 
     {{-- Modal agregar nueva opción --}}
 
